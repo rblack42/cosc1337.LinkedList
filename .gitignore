@@ -1,0 +1,18 @@
+# C++
+*.o
+*.d
+*.exe
+
+# vim
+*~
+*.swp
+
+# Mac
+.DS_Store
+
+# virtualenv
+_venv
+
+# Sphinx
+_build
+
