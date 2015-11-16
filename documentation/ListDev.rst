@@ -44,7 +44,6 @@ Here is the missing implementation code:
 ..  literalinclude::    ../lib/List.cpp
     :caption: lib/List.cpp (1)
     :linenos:
-    :lines: 1-7
 
 ..  code-block:: text
 
@@ -77,19 +76,17 @@ initialization. We will need that later anyway!
 ..  literalinclude::    ../includes/List.h
     :caption: includes/List.h (2)
     :linenos:
-    :lines: 6-7
 
 And the implementation:
 
 ..  literalinclude::    ../lib/List.cpp
     :caption: lib/List.cpp (3)
     :linenos:
-    :lines: 3-5
 
 Now we get a passing test! We have completed our first cycle using :term:`TDD`!
 
-Cycle 2: Adding Nodes to the List
-*********************************
+Cycle 2: Creating Nodes for the List
+************************************
 
 The whole point in building a linked list is to create a place to store data
 that can grow as we need more room. We will store the data in objects we create
@@ -108,7 +105,6 @@ Here is the first test for our node class:
 ..  literalinclude::    ../tests/test_node.cpp
     :caption: tests/test_node.cpp
     :linenos:
-    :lines: 1-8
 
 ..  note::
 
@@ -119,14 +115,12 @@ Here is the specification of our node class:
 ..  literalinclude::    ../includes/Node.h 
     :caption: includes/Node.h
     :linenos:
-    :lines: 1-11
 
 And the implementation file:
 
 ..  literalinclude::    ../lib/Node.cpp
     :caption: lib/Node.cpp
     :linenos:
-    :lines: 1-15
 
 Here is out test run now:
 
@@ -144,11 +138,11 @@ Cycle 3: Accessing Node Private Attributes
 ******************************************
 
 Since we made the attributes of our Node objects private, we will need to add
-methods to set and get those attributes. Here are the tests we will need for these additions:
+methods to set and get those attributes. Here are the tests we will need for
+these additions:
 
 ..  literalinclude::    ../tests/test_node.cpp
     :linenos:
-    :lines: 10-17
 
 There are a few interesting point to make about this code. The data access
 routines will be pretty simple, and standard ``get`` and ``set`` methods are
@@ -161,9 +155,9 @@ it:
 
     * ``Node * ptr`` sets up a pointer variable
 
-    * `e= &node`` sets that pointer to the address of the ``node`` object.
+    * `= &node`` sets that pointer to the address of the ``node`` object.
 
-    * ``node.setNext( ptr )`` sets the ``Next`` attribute so it pouints back to
+    * ``node.setNext( ptr )`` sets the ``Next`` attribute so it points back to
       this node
 
     * ``node.getNext()`` retrieves a pointer to a Node. 
@@ -201,12 +195,11 @@ the size of the list grows as we add a node:
 ..  literalinclude::    ../tests/test_list.cpp
     :caption: tests/test_list.cpp (3)
     :linenos:
-    :lines: 9-14
 
 Note that we set up a routine that adds a new ``item``, not a new ``node``.
-Building a data container like this needs to hide the details about how the
-container is actually working from the user. That way, if needed, you can
-change the entire implementation of your container with out changing the
+When you build a data container like this, you should hide the details about
+how the container is actually working from the user. That way, if needed, you
+can change the entire implementation of your container with out changing the
 interface to that container! (We might need to change its name, though, if it
 is no longer a list!)
 
@@ -228,6 +221,67 @@ Wait! We have not added an attribute to that object to hold the list of nodes!
 
 ..  literalinclude::    ../includes/List.h
     :linenos:
+
+And the required implementation code:
+
+..  literalinclude::    ../lib/List.cpp
+    :linenos:
+
+In this code, we create a new ``Node`` object using ``dynamic memory``. The
+``new`` operator asks the operating system for a chunk of memory big enough to
+hold the object, and gets back the address of that memory chunk. We will
+initialize that new (unnamed) object, then hook it to the front of the list. By
+copying the old ``list`` attribute from the ``List`` object into the ``Next``
+attribute in the new object we attach any old list to this node. That is
+exactly what we want if this list is to become the new first item.
+
+Cycle 5: Walking the List
+*************************
+
+Now that we have a way to add items to the front of the list, we are in a
+position to "walk" the list, visiting each node in order. We can print this
+list our and read it, but to test the new method, we need to do something
+different.
+
+C++ has a string "sstream" class we can use to construct a string as we walk
+the list. We can then print this new string out, or compare it to what we want
+to prove it contains. 
+
+Here is a test to make sure the list holds the required data:
+
+..  literalinclude::    ../tests/test_list.cpp
+    :linenos:
+
+
+Here is the new code we need to add to the list class:
+
+..  literalinclude::    ../lib/List.cpp
+    :linenos:
+
+Note that the string we produce using this ``toString()`` method will be the nodes in reverse. There will also be a trailing space at the end of the string generated. 
+
+Wrapping Up
+***********
+
+At this point we have a basic linked list class that we can use as a basis for
+our simulator. Of course, we need to alter the list to make it hold the
+vehicles we will be simulating. That is easy to do, but requires copying this
+``List`` class and changing the data type of the data item. That is simple
+enough to do, but it raises an interesting point.
+
+What if we want to build a bunch of linked lists, each holding a different
+data type? Do we have to copy and edit this class a bunch of times?
+
+Actually, no!
+
+We can use a feature of C++ called ``templates`` to create a generic linked
+list class that we can use to create all of the special lists we need.  This is
+not formally part of this course, but here is what it will look like:
+
+
+
+
+
 
 
 
