@@ -1,6 +1,6 @@
 APPFILES	= $(wildcard $(SRC)/*.cpp)
 LIBFILES	= $(wildcard $(LIB)/*.cpp)
-TESTFILES	= $(wildcard $(TEST)/*.cpp)
+TESTFILES	= $(wildcard $(TESTS)/*.cpp)
 
 APPOBJS		= $(APPFILES:.cpp=.o)
 LIBOBJS		= $(LIBFILES:.cpp=.o)

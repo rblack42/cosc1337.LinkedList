@@ -1,29 +1,24 @@
 # Makefile for Linked List class
 
-EXT		= .exe
-
+# application names ---------------------------------------
 APP		= demo
 TEST	= test
+
+# project directory names ---------------------------------
+SRC 	= src
+LIB		= lib
+TESTS	= tests
+INCS	= includes
+
+# do not modify anything below this point -----------------
+CFLAGS	= -Wc++11-extensions -I $(INCS)
+include makevars/system.mak
+include makevars/files.mak
 
 DEMOAPP = $(APP)$(EXT)
 TESTAPP	= $(TEST)$(EXT)
 
-SRC 	= src
-LIB		= lib
-TEST	= tests
-INCS	= includes
-
-include makevars/files.mak
-
-# tool definitions
-
-CXX		= g++
-AR		= ar
-COV		= gcov
-
-CFLAGS	= -MMD -I$(INCS) -std=c++11
-
-# build targets follow
+# build targets follow ------------------------------------
 
 all:	$(DEMOAPP) $(TESTAPP)
 
@@ -46,4 +41,4 @@ debug:
 clean:
 	$(RM) $(ALLOBJS) $(DEMOAPP) $(TESTAPP)
 
-include $(DEPENDS)
+-include $(DEPENDS)
