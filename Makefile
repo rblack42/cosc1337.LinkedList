@@ -11,7 +11,7 @@ TESTS	= tests
 INCS	= includes
 
 # do not modify anything below this point -----------------
-CFLAGS	= -Wc++11-extensions -I $(INCS)
+CFLAGS	= -I $(INCS)
 include makevars/system.mak
 include makevars/files.mak
 
