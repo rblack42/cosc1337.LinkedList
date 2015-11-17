@@ -16,3 +16,6 @@ _venv
 # Sphinx
 _build
 
+# Vagrant
+.vagrant
+
