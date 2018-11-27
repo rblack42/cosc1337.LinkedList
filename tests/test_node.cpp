@@ -1,5 +1,5 @@
 #include <catch.hpp>
-#include "node.h"
+#include "Node.h"
 
 TEST_CASE( "a new node has data set to zero and a NULL nest pointer" ) {
     Node node;
